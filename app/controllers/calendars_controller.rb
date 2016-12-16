@@ -10,6 +10,17 @@ class CalendarsController < ApplicationController
   # GET /calendars/1
   # GET /calendars/1.json
   def show
+    @array = []
+    for event in @calendar.events do
+      found = @array.find {|x| x[:summary] == event.summary}
+      if found
+        found[:count] += 1
+      else
+        @array << {:summary => event.summary, :count => 1 }
+      end
+      puts event.inspect
+    end
+    @array = @array.sort_by{ |el| el[:count] }
   end
 
   # GET /calendars/new
@@ -30,6 +41,7 @@ class CalendarsController < ApplicationController
 
     respond_to do |format|
       if @calendar.save
+        ImportCalendarFromUploadJob.perform_later @calendar
         format.html { redirect_to @calendar, notice: 'Calendar was successfully created.' }
         format.json { render :show, status: :created, location: @calendar }
       else
@@ -72,7 +84,6 @@ class CalendarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendar_params
-      params.require(:calendar).permit(:title)
-      params.require(:calendar).permit(:file)
+      params.require(:calendar).permit(:title,:file)
     end
 end
