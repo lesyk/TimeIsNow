@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215075125) do
+ActiveRecord::Schema.define(version: 20161216081321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,19 @@ ActiveRecord::Schema.define(version: 20161215075125) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "uid"
+    t.string   "summary"
+    t.string   "description"
+    t.datetime "dtstart"
+    t.datetime "dtend"
+    t.string   "location"
+    t.integer  "calendar_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["calendar_id"], name: "index_events_on_calendar_id", using: :btree
   end
 
 end
