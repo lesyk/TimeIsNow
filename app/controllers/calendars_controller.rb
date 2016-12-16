@@ -1,5 +1,6 @@
 class CalendarsController < ApplicationController
   before_action :set_calendar, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /calendars
   # GET /calendars.json
@@ -35,7 +36,7 @@ class CalendarsController < ApplicationController
   # POST /calendars
   # POST /calendars.json
   def create
-    @calendar = Calendar.new(calendar_params)
+    @calendar = current_user.calendars.new(calendar_params)
 
     puts calendar_params.inspect
 

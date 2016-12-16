@@ -17,7 +17,8 @@ class ImportCalendarFromUploadJob < ApplicationJob
         :dtstart => event.dtstart,
         :dtend => event.dtend,
         :location => event.location,
-        :uid => event.uid
+        :uid => event.uid,
+        :user_id => calendar.user_id
       )
     end
     puts "Finished"
