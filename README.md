@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+https://devcenter.heroku.com/articles/getting-started-with-rails5
+git push heroku master
+heroku rake db:migrate
